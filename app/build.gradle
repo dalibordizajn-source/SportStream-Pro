@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.application' version '8.2.0'
 }
 
 android {
@@ -13,12 +13,4 @@ android {
         versionCode 1
         versionName "1.0"
     }
-    buildFeatures {
-        viewBinding true
-    }
-}
-
-dependencies {
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
 }
