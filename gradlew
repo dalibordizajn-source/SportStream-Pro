@@ -1,10 +1,10 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-# Ponovno postavljanje Gradle-a
+# Glavna skripta za pokretanje gradnje
 APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
 
-# Dodajemo standardne Gradle komande
+# Dodajemo potrebne funkcije
 warn () {
     echo "$*"
 }
@@ -16,10 +16,16 @@ die () {
     exit 1
 }
 
-# Provjera sustava
-[ -z "$JAVA_HOME" ] && JAVA_HOME=$(type -p java | xargs readlink -f | xargs dirname | xargs dirname)
-if [ -z "$JAVA_HOME" ]; then
-    die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH."
+# Pronalaženje Jave
+if [ -n "$JAVA_HOME" ] ; then
+    JAVACMD="$JAVA_HOME/bin/java"
+else
+    JAVACMD="java"
 fi
 
-exec java -version
+if [ ! -x "$JAVACMD" ] ; then
+    die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME"
+fi
+
+# Pokretanje
+exec "$JAVACMD" "-Xmx64m" "-Xms64m" -classpath "gradle/wrapper/gradle-wrapper.jar" org.gradle.wrapper.GradleWrapperMain "$@"
